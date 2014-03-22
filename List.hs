@@ -1,22 +1,22 @@
-module List
-( gcd
-, count
-, countOrd
-, split
-, interlace
-, mergesort
-, insert
-, foldl2
-, bubblesort
-, listgen
-, forlist
-) where
+module List (
+	gcd,
+	count,
+	countOrd,
+	split,
+	interlace,
+	mergesort,
+	insert,
+	foldl2,
+	bubblesort,
+	listgen,
+	forlist
+	) where
 
 import Prelude hiding (gcd)
 import Data.List (genericLength)
 
 gcd :: Integral a => a -> a -> a
-gcd x y = let a = max x y; b = min x y; m = a `mod` b
+gcd x y = let a = max (abs x) (abs y); b = min (abs x) (abs y); m = a `mod` b
     in if m == 0 then b else gcd b m
 
 count :: (Eq a, Integral b) => [a] -> [(a, b)]
