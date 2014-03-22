@@ -10,6 +10,8 @@ import Prelude hiding (gcd)
 import Data.Char (chr, ord)
 import List (gcd, mergesort)
 
+-- RSA version 1.5
+
 ee :: Integral a => (a,a,a,a) -> [(a,a,a,a)]
 ee (m, k, n, d) = if d == 0 then [] else (m,k,n,d) : ee (n, quot n d, d, mod n d)
 rewrite :: Integral a => (a,a,a,a) -> (a,[(a,a)])
