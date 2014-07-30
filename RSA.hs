@@ -4,10 +4,10 @@ module RSA
 , decode
 ) where
 
--- RSA version 2.0
+-- RSA version 2.0.1
 
 modexp :: Integral a => a -> a -> a -> (Maybe a) -> a -- modular exponentiation
-modexp b e m (Just hint) = modexp b (e mod hint) m Nothing
+modexp b e m (Just hint) = modexp b (mod e hint) m Nothing
 modexp b e m Nothing
 	| e == 0 = 1
 	| b <  0 = modexp (mod b m) e m Nothing
@@ -19,11 +19,11 @@ modexp b e m Nothing
 -- compute inverse of a mod p*q using Euler's theorem
 inverse :: Integral a => a -> a -> a -> a
 -- assumes prime p, prime q, when a <\- {1,p,q,p*q}
-inverse a p q = modexp a ((p-1)*(q-1)-1) (p*q) ((p-1)*(q-1))
+inverse a p q = modexp a ((p-1)*(q-1)-1) (p*q) (Just $ (p-1)*(q-1))
 encode :: Integral a => a -> a -> a -> a
 encode n e x = modexp x e n Nothing
 decode :: Integral a => a -> a -> a -> a -> a
-decode p q e x = modexp x (inverse e p q) (p*q) ((p-1)*(q-1))
+decode p q e x = modexp x (inverse e p q) (p*q) (Just $ (p-1)*(q-1))
 
 {-
 -- start with primes p and q
